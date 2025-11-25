@@ -28,6 +28,7 @@ def process_nodes(files):
                 continue
                 
             label = os.path.splitext(filename)[0] 
+            label = label.upper()
             file_path = os.path.join(INPUT_DIR, filename)
             
             print(f"Processing node: {label}")
@@ -98,6 +99,10 @@ def process_edges(files):
                 dst_type_final = "Place"
             else:
                 dst_type_final = dst_type_raw
+
+            # Capitalize first letter but keep the rest intact, not lowercasing them
+            cap_label = rel_label.capitalize()[0]
+            rel_label = cap_label + rel_label[1:]
 
             file_path = os.path.join(INPUT_DIR, filename)
             print(f"Processing edge: {src_type} -[{rel_label}]-> {dst_type_raw}")
