@@ -1,13 +1,14 @@
 import os
 import csv
 
-INPUT_DIR = "csv_files"
+INPUT_DIR = "flat_csv"
 OUTPUT_DIR = "pgdf_output"
 
 DELIMITER_IN = '|'
 DELIMITER_OUT = '|'
 
 FORCE_PLACE_TARGET = ["isLocatedIn", "isPartOf"] 
+FORCE_ORGANISATION_TARGET = ["studyAt", "workAt"] 
 
 def ensure_dir(directory):
     if not os.path.exists(directory):
@@ -95,8 +96,10 @@ def process_edges(files):
                 
             src_type, rel_label, dst_type_raw = name_parts
             
-            if rel_label in FORCE_PLACE_TARGET:
+            if rel_label in FORCE_PLACE_TARGET or dst_type_raw in ["City", "Country", "Continent"]:
                 dst_type_final = "Place"
+            elif rel_label in FORCE_ORGANISATION_TARGET or dst_type_raw in ["University", "Company"]:
+                dst_type_final = "Organisation"
             else:
                 dst_type_final = dst_type_raw
 

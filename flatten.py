@@ -2,9 +2,14 @@ import os
 import shutil
 import glob
 
-SOURCE_DIR = "out/graphs/csv/bi/composite-projected-fk" 
+# Detectar automáticamente si se ejecuta desde la raíz o dentro de out/
+if os.path.exists("graphs/csv/bi/composite-projected-fk"):
+    SOURCE_DIR = "graphs/csv/bi/composite-projected-fk" 
+else:
+    SOURCE_DIR = "out/graphs/csv/bi/composite-projected-fk"
+
 OUTPUT_DIR = "flat_csv"                                 
-subfolders = ["snapshot/dynamic", "snapshot/static"]   
+subfolders = ["initial_snapshot/dynamic", "initial_snapshot/static"]   
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
